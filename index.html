@@ -10,11 +10,21 @@
     <header>
         <h1>Gerador de caça-palavras</h1>
     </header>
-    <div id="entrada">
+    <div id="entrada" class="entrada-visivel">
         <h2>Insira as palavras no espaço abaixo (no máximo dez, uma em cada linha):</h2>
         <textarea id="entrada-textarea"></textarea><br />
         <button id="btn-gerar" onclick="gerarCacaPalavras()">Gerar caça-palavras</button>
     </div>
+    <div id="caca-palavras" class="caca-palavras-escondido"></div>
+    <div id="caca-palavras-segredo" class="caca-palavras-segredo-escondido"></div>     
+    <div id="palavras"></div>
+    <div class="mostrar-segredo-escondido" id="mostrar-segredo">
+        <span class="mostrar-segredo-texto">Mostrar segredo</span>
+        <label class="switch">            
+            <input type="checkbox" onchange="checarCheckbox()" id="mostrar-segedo-checkbox">
+            <span class="slider round"></span>
+        </label>
+    </div>   
 </body>
 <script src="script.js"></script>
 </html>
