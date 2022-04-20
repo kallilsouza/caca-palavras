@@ -3,6 +3,10 @@ function gerarCacaPalavras(){
     let textarea = document.getElementById("entrada-textarea");
     let texto = textarea.value;
     let palavras = texto.toUpperCase().split('\n');
+    let linhaVazia = palavras.indexOf('');
+    if(linhaVazia >= 0 && linhaVazia == palavras.length-1){
+        palavras.splice(linhaVazia);
+    }
     let matriz = gerarMatrizAleatoria(16, 20);    
     let matrizesComPalavras = inserirPalavrasNaMatriz(palavras, matriz, dificuldade);
     preencheCacaPalavras(matrizesComPalavras[0]);
