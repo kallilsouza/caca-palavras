@@ -3,22 +3,32 @@ function gerarCacaPalavras(){
     let textarea = document.getElementById("entrada-textarea");
     let texto = textarea.value;
     let palavras = texto.toUpperCase().split('\n');
-    let matriz = gerarMatrizAleatoria(10, 15);    
-    // TODO: Verificar se palavra contém espaço
-    // TODO: Não permitir palavras maiores que X letras
-    // TODO: Não permitir número, apenas letras e hífens
+    let matriz = gerarMatrizAleatoria(16, 20);    
     let matrizesComPalavras = inserirPalavrasNaMatriz(palavras, matriz, dificuldade);
-    // matrizComPalavras.forEach(linha => {
-    //     txt = "";
-    //     linha.forEach(letra => {
-    //         txt += letra+" ";
-    //     });
-    //     console.log(txt);
-    // });
     preencheCacaPalavras(matrizesComPalavras[0]);
     preencheCacaPalavrasSegredo(matrizesComPalavras[0], matrizesComPalavras[1]);
     exibePalavras(palavras);
     exibeCheckboxMostrarSegredo();
+}
+
+let textarea = document.getElementById("entrada-textarea");
+textarea.addEventListener("input", function(){
+    let texto = this.value;
+    this.value = limitarPalavras(texto);
+})
+
+function limitarPalavras(texto){
+    texto = texto.replace(" ", "");
+    let linhas = texto.split('\n');
+    let linhaVazia = linhas.indexOf('');
+    if(linhaVazia >= 0 && linhaVazia != linhas.length-1){
+        linhas.pop();
+    }
+    for(i = 0; i < linhas.length; i++){
+        linhas[i] = linhas[i].slice(0,12);
+    }
+    texto = linhas.slice(0,10).join('\n');
+    return texto;
 }
 
 function gerarMatrizAleatoria(altura, largura){
@@ -83,13 +93,7 @@ function inserirPalavrasNaMatriz(palavras, matriz, dificuldade){
                     while(tentativas){
                         linha = Math.floor(Math.random() * altura);
                         coluna = Math.floor(Math.random() * (largura%(largura-tamanho)));  
-                        let recomecar = false;                      
-                        // for(x = coluna; x < tamanho; x++){
-                        //     if(matrizCasasUsadas[linha][x] !== " "){
-                        //         recomecar = true;
-                        //         break;
-                        //     }
-                        // }    
+                        let recomecar = false;            
                         for(i = coluna, p = 0; i < tamanho, p < tamanho; i++, p++){
                             if(matrizCasasUsadas[linha][i] !== " "){
                                 recomecar = true;
@@ -109,11 +113,6 @@ function inserirPalavrasNaMatriz(palavras, matriz, dificuldade){
                         matrizCasasUsadas[linha][i] = palavra[p];
                         novaMatriz[linha][i] = palavra[p];
                     }
-                    // console.log("Posição: horizontal");
-                    // console.log("Palavra: "+palavra);
-                    // console.log("Linha: "+linha);
-                    // console.log("Coluna: "+coluna);
-                    // console.log("------------------");
                     break;
                 }                
             }
@@ -136,13 +135,7 @@ function inserirPalavrasNaMatriz(palavras, matriz, dificuldade){
                     while(tentativas){
                         linha = Math.floor(Math.random() * (altura%(altura-tamanho)));
                         coluna = Math.floor(Math.random() * largura);
-                        let recomecar = false;                      
-                        // for(y = linha; y < tamanho; y++){
-                        //     if(matrizCasasUsadas[y][coluna] !== " "){
-                        //         recomecar = true;
-                        //         break;
-                        //     }
-                        // }    
+                        let recomecar = false;               
                         for(i = linha, p = 0; i < tamanho, p < tamanho; i++, p++){
                             if(matrizCasasUsadas[i][coluna] !== " "){
                                 recomecar = true;
@@ -162,11 +155,6 @@ function inserirPalavrasNaMatriz(palavras, matriz, dificuldade){
                         matrizCasasUsadas[i][coluna] = palavra[p];
                         novaMatriz[i][coluna] = palavra[p];
                     }
-                    // console.log("Posição: vertical");
-                    // console.log("Palavra: "+palavra);
-                    // console.log("Linha: "+linha);
-                    // console.log("Coluna: "+coluna);
-                    // console.log("------------------");
                     break;
                 }
             }
@@ -216,9 +204,10 @@ function exibePalavras(palavras){
     let palavrasDiv = document.getElementById("palavras");
     let texto = "";
     palavras.forEach(palavra => {
-        texto += palavra + "<br />";
+        texto += "<div class=\"palavra\">"+palavra+"</div>";
     });
     palavrasDiv.innerHTML = texto;
+    palavrasDiv.className = 'palavras-visivel';
 }
 
 function exibeCheckboxMostrarSegredo(){

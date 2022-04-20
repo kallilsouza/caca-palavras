@@ -94,6 +94,21 @@ header h1{
     background-color: rgb(228, 228, 228);
     width: 100%;
     text-align: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100px;
+}
+
+.palavras-escondido{
+    display: none;
+}
+
+.palavras-visivel{
+    display: flex;
+}
+
+.palavra{
+    margin: 5px;
 }
 
 #mostrar-segredo{
@@ -121,6 +136,15 @@ header h1{
     flex-direction: column;            
     justify-content: space-evenly;
     margin: 3px;
+}
+
+@media only screen and (max-width: 600px) {
+    #caca-palavras, #caca-palavras-segredo{
+        font-size: 13px;
+    }
+    .letra, .letra-destaque{
+        padding: 0px 3px 0px 3px;
+    }
 }
 
 .switch {
